@@ -9,12 +9,21 @@ body {
   padding: 0;
   justify-content: center;
   align-items: center;
-  background-color: black;
+  /* background-color: black; */
+  background: url('wallpaper.jpg');
   font-family: '-apple-system';
   text-transform: uppercase;
   -webkit-font-smoothing: antialiased;
-}
+  background-repeat: no-repeat;
+  background-size: cover; 
 
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+body.more-blur {
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
 clock {
   width: 92vw;
   height: 92vw;
@@ -31,9 +40,10 @@ glyph {
   font-weight: 300;
   line-height: 5.5vh;
   text-align: center;
-  color: #222;
+  color: rgba(0, 0, 0, 0.162);
   transition: color 400ms ease-in-out;
 }
+
 @media screen and (min-height: 1200px) and (max-width: 1200px) {
   glyph {
     font-size: 1.6vh;
@@ -41,5 +51,7 @@ glyph {
 }
 
 .on glyph {
-  color: white;
+  color: rgb(0, 0, 0);
+  /* mix-blend-mode: difference; */
+  /* text-shadow: #00000037  1px 1px 4px; ; */
 }

@@ -18,10 +18,17 @@ static NSString * const gridClockModule = @"com.chrstphrknwtn.grid-clock";
     
     // Webview
     NSURL* indexHTMLDocumentURL = [NSURL URLWithString:[[[NSURL fileURLWithPath:[[NSBundle bundleForClass:self.class].resourcePath stringByAppendingString:@"/Webview/index.html"] isDirectory:NO] description] stringByAppendingFormat:@"?screensaver=1%@", self.isPreview ? @"&is_preview=1" : @""]];
+    
+    NSURL* indexNoClockHTMLDocumentURL = [NSURL URLWithString:[[[NSURL fileURLWithPath:[[NSBundle bundleForClass:self.class].resourcePath stringByAppendingString:@"/Webview/index-without-clock.html"] isDirectory:NO] description] stringByAppendingFormat:@"?screensaver=1%@", self.isPreview ? @"&is_preview=1" : @""]];
 
     WebView* webView = [[WebView alloc] initWithFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height)];
+    WebView* webViewNoClock = [[WebView alloc] initWithFrame:NSMakeRect(0, 0, frame.size.width, frame.size.height)];
+
     webView.drawsBackground = NO; // Avoids a "white flash" just before the index.html file has loaded
+    webViewNoClock.drawsBackground = NO; // Avoids a "white flash" just before the index.html file has loaded
+
     [webView.mainFrame loadRequest:[NSURLRequest requestWithURL:indexHTMLDocumentURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0]];
+    [webViewNoClock.mainFrame loadRequest:[NSURLRequest requestWithURL:indexNoClockHTMLDocumentURL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0]];
     
     // Show on screens based on preferences
     NSArray* screens = [NSScreen screens];
@@ -33,6 +40,8 @@ static NSString * const gridClockModule = @"com.chrstphrknwtn.grid-clock";
         case 0:
             if ((primaryScreen.frame.origin.x == frame.origin.x) || isPreview) {
                 [self addSubview:webView];
+            } else {
+                [self addSubview:webViewNoClock];
             }
             break;
         // Last Focussed Screen
